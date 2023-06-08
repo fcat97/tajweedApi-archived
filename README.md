@@ -1,4 +1,4 @@
-![cover image](https://github.com/fcat97/TajweedApi/doc/cover.png?raw=true)
+![cover image](https://github.com/fcat97/TajweedApi/blob/main/doc/cover.png?raw=true)
 
 # Tajweed Api
 
