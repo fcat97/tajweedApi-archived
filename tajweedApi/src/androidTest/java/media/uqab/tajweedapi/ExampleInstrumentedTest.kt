@@ -1,12 +1,11 @@
 package media.uqab.tajweedapi
 
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import media.uqab.tajweedapi.indopak.IdgamWithGunnah
+import media.uqab.tajweedapi.indopak.IndoPakTajweedApi
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -16,9 +15,14 @@ import org.junit.Assert.*
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("media.uqab.tajweedapi.test", appContext.packageName)
+    fun testIdgamWithGunnah() {
+        val verse = "خَتَمَ ٱللَّهُ عَلَىٰ قُلُوبِهِمْ وَعَلَىٰ سَمْعِهِمْۖ وَعَلَىٰٓ أَبْصَٰرِهِمْ غِشَٰوَةٌۖ وَلَهُمْ عَذَابٌ عَظِيمٌ" // sura bakarah 2:7
+        val api = IndoPakTajweedApi.getSingleton()
+        val result = api.getTajweed(verse)
+        result.forEach {
+            println(it)
+        }
+
+        assertEquals(IdgamWithGunnah, result[0].type)
     }
 }

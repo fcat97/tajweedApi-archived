@@ -5,6 +5,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import media.uqab.tajweedapi.Tajweed
 import media.uqab.tajweedapi.TajweedApi
 import media.uqab.tajweedapi.common.DefaultColor
 import media.uqab.tajweedapi.common.DefaultParserConfig
@@ -68,6 +69,12 @@ class IndoPakTajweedApi : TajweedApi {
      * @param verse Verse to decorate with color in IndoQuran Format
      * @return a spanned Object with Tazweed decoration.
      */
+    @Deprecated(
+        message = "This method is Platform dependent, will be dropped in future release",
+        replaceWith = ReplaceWith(
+            expression = "getTajweed(verse)",
+        )
+    )
     override fun getTajweedColored(verse: String): Spanned {
         val spannable = SpannableString(verse)
 
@@ -100,6 +107,25 @@ class IndoPakTajweedApi : TajweedApi {
         return spannable
     }
 
+    override fun getTajweed(verse: String): List<Tajweed> {
+        val tajweed = mutableListOf<Tajweed>()
+
+        listOf(
+            patternWazeebGunnah to WazeebGunnah,
+            patternIqfaa to Iqfaa,
+            patternIqlab to Iqlab,
+            patternIdgaanWG to IdgamWithGunnah,
+            patternIdgaanWoG to IdgamWithoutGunnah,
+            patternQalqalah to Qalqalah,
+            patternQalqalahStop to QalqalahAtStop
+        ).forEach { (regex, type) ->
+            regex.findAll(verse).map {
+                Tajweed(type, it.value, it.range.first, it.range.last)
+            }.let(tajweed::addAll)
+        }
+
+        return tajweed
+    }
 
     private fun applySpan(
         regex: Regex,

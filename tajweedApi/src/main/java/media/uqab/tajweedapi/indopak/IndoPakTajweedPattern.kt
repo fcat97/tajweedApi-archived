@@ -42,7 +42,13 @@ internal class IndoPakTajweedPattern(private val config: ParserConfig) : Tajweed
     ) // U+06cc(farsi ya) U+064a, U+0648, U+0645, U+0646
     private val harf_idgam_withoutGunnah = listOf('ر', 'ل') // U+0631, U+0644
     private val stops = listOf(
-        "مـ", "قلى", '\u06da', '\u06d9', '\u06dc', '\u06d9', '\u066a', '\u0615'
+        "مـ",
+        "قلى",
+        '\u06da', // small jeem
+        '\u06dc', // small high seen
+        '\u06d9', // small high lam-alef
+        '\u066a', // arabic percent sign
+        '\u0615' // small high tah
     )
 
 
@@ -115,6 +121,7 @@ internal class IndoPakTajweedPattern(private val config: ParserConfig) : Tajweed
         append('\u2009') // thin space
         append('?')
 
+        // [] this can't be used since some stop sign contains multiple characters
         append('(')
         append(stops.joinToString("|"))
         append(')')

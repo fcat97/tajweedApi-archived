@@ -9,5 +9,12 @@ import android.text.Spanned
  * @author shahriar zaman
  */
 interface TajweedApi {
+    @Deprecated(
+        message = "This method is Platform dependent, will be dropped in future release",
+        replaceWith = ReplaceWith(
+            expression = "getTajweed(verse)",
+        )
+    )
     fun getTajweedColored(verse: String): Spanned
+    fun getTajweed(verse: String): List<Tajweed>
 }

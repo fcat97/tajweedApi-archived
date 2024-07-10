@@ -7,7 +7,10 @@ An android library to add tajweed colors into arabic texts.
 ## What's New?
 
 - Custom color for rules now supported.
-- Custom implementation of tajweed rules now possible.
+- Custom implementation of tajweed rules.
+- Platform specific method deprecated.
+- Matching tajweed along with its type and position.
+- Initial refactor for supporting multiplatform.
 
 ## Add To Project
 
