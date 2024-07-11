@@ -3,6 +3,7 @@ package media.uqab.tajweedapi
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import media.uqab.tajweedapi.indopak.IdgamWithGunnah
 import media.uqab.tajweedapi.indopak.IndoPakTajweedApi
+import media.uqab.tajweedapi.indopak.Qalqalah
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,10 +20,10 @@ class ExampleInstrumentedTest {
         val verse = "خَتَمَ ٱللَّهُ عَلَىٰ قُلُوبِهِمْ وَعَلَىٰ سَمْعِهِمْۖ وَعَلَىٰٓ أَبْصَٰرِهِمْ غِشَٰوَةٌۖ وَلَهُمْ عَذَابٌ عَظِيمٌ" // sura bakarah 2:7
         val api = IndoPakTajweedApi.getSingleton()
         val result = api.getTajweed(verse)
-        result.forEach {
-            println(it)
-        }
 
-        assertEquals(IdgamWithGunnah, result[0].type)
+
+
+        assertEquals(Qalqalah, result.first { it.type == Qalqalah }.type) // has qalqalah
+        assertEquals(IdgamWithGunnah, result.first { it.type == IdgamWithGunnah }.type) // has idgam
     }
 }

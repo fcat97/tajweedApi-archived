@@ -1,9 +1,8 @@
 package media.uqab.tajweedapi.indopak
 
 import media.uqab.tajweedapi.TajweedPattern
-import media.uqab.tajweedapi.common.ParserConfig
 
-internal class IndoPakTajweedPattern(private val config: ParserConfig) : TajweedPattern {
+open class IndoPakTajweedPattern : TajweedPattern {
     private val iqfaa = listOf(
         'ت',
         'ث',
@@ -50,6 +49,7 @@ internal class IndoPakTajweedPattern(private val config: ParserConfig) : Tajweed
         '\u066a', // arabic percent sign
         '\u0615' // small high tah
     )
+    private val ignoreCharBetweenIdgamGunnah = listOf('\u06d6')
 
 
     /**
@@ -58,7 +58,7 @@ internal class IndoPakTajweedPattern(private val config: ParserConfig) : Tajweed
      * the tanween can have:
      * 1. any optional char at the beginning
      * 2. optional tashdeed followed
-     * 3. and a alif at the end
+     * 3. and an optional alif at the end
      *
      * example: sura 2, verse 23
      */
@@ -147,9 +147,18 @@ internal class IndoPakTajweedPattern(private val config: ParserConfig) : Tajweed
 
     override fun getIdgaamWithGunnahPattern() = buildString {
         this.append(getNuunSakin())
+
+        // when idgam appears between two part of a sentence e.g. sura 2:7
+        append('(')
+        append('['); for (c in ignoreCharBetweenIdgamGunnah) append(c); append(']')
+        append(") ?")
+
         this.append('[')
         for (c in harf_idgam_withGunnah) this.append(c)
         this.append(']')
+
+        this.append(tashdeed)
+        this.append('?')
 
         // here we don't use the getHarqatPattern()
         // since `U+06cc` sometime acts as extra harf which has no gunnah
@@ -160,9 +169,6 @@ internal class IndoPakTajweedPattern(private val config: ParserConfig) : Tajweed
         this.append(subscriptAlif)
         this.append(invertedDamma)
         this.append(']') // <--- here we don't add '?' i.e. it's must, not optional
-
-        this.append(tashdeed)
-        this.append('?')
     }
 
     override fun getIdgaamWithOutGunnahPattern() = buildString {

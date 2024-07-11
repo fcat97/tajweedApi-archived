@@ -1,6 +1,6 @@
 package media.uqab.tajweedapi
 
 /**
- * Type of tajweed
+ * Base interface for types of tajweed
  */
 interface TajweedType

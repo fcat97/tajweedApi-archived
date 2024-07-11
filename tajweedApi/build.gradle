@@ -49,7 +49,7 @@ afterEvaluate {
                 groupId = 'media.uqab.tajweedApi'
                 artifactId = 'tajweedApi'
 
-                version = "2.0.1"
+                version = "2.1.0"
             }
         }
     }

@@ -7,15 +7,11 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import media.uqab.tajweedapi.Tajweed
 import media.uqab.tajweedapi.TajweedApi
-import media.uqab.tajweedapi.common.DefaultColor
-import media.uqab.tajweedapi.common.DefaultParserConfig
-import media.uqab.tajweedapi.common.DefaultTajweedConfig
-import media.uqab.tajweedapi.common.TajweedConfig
 
 class IndoPakTajweedApi : TajweedApi {
     private val TAG = "TajweedApi"
 
-    private var pattern = IndoPakTajweedPattern(DefaultParserConfig)
+    private var pattern = IndoPakTajweedPattern()
 
     private var patternQalqalah = pattern.getQalqalahInMiddlePattern().toRegex()
     private var patternQalqalahStop = pattern.getQalqalahInStopPattern().toRegex()
@@ -25,37 +21,26 @@ class IndoPakTajweedApi : TajweedApi {
     private var patternIdgaanWoG = pattern.getIdgaamWithOutGunnahPattern().toRegex()
     private var patternWazeebGunnah = pattern.getWazeebGunnah().toRegex()
 
-    private var qalqalahColor = DefaultColor.qalqalahColor.let(Color::parseColor)
-    private var iqfaaColor = DefaultColor.iqfaaColor.let(Color::parseColor)
-    private var iqlabColor = DefaultColor.iqlabColor.let(Color::parseColor)
-    private var idgamWithGunnahColor = DefaultColor.idgamWithGunnahColor.let(Color::parseColor)
-    private var idgamWithOutGunnahColor =
-        DefaultColor.idgamWithOutGunnahColor.let(Color::parseColor)
-    private var wazeebGunnahColor = DefaultColor.wazeebGunnahColor.let(Color::parseColor)
+    private var qalqalahColor = DefaultIndopakColor.qalqalahColor.let(Color::parseColor)
+    private var iqfaaColor = DefaultIndopakColor.iqfaaColor.let(Color::parseColor)
+    private var iqlabColor = DefaultIndopakColor.iqlabColor.let(Color::parseColor)
+    private var idgamWithGunnahColor = DefaultIndopakColor.idgamWithGunnahColor.let(Color::parseColor)
+    private var idgamWithOutGunnahColor = DefaultIndopakColor.idgamWithOutGunnahColor.let(Color::parseColor)
+    private var wazeebGunnahColor = DefaultIndopakColor.wazeebGunnahColor.let(Color::parseColor)
 
     /**
      * configuration to be applied on the verse for coloring.
      */
-    var config: TajweedConfig = DefaultTajweedConfig
+    @Deprecated("Platform specific, will be removed. use TajweedPainter instead.")
+    var color: IndopakTajweedColor = DefaultIndopakColor
         set(value) {
-            with(value.colorConfig) {
+            with(value) {
                 this@IndoPakTajweedApi.qalqalahColor = Color.parseColor(qalqalahColor)
                 this@IndoPakTajweedApi.iqfaaColor = Color.parseColor(iqfaaColor)
                 this@IndoPakTajweedApi.iqlabColor = Color.parseColor(iqlabColor)
                 this@IndoPakTajweedApi.idgamWithGunnahColor = Color.parseColor(idgamWithGunnahColor)
-                this@IndoPakTajweedApi.idgamWithOutGunnahColor =
-                    Color.parseColor(idgamWithOutGunnahColor)
+                this@IndoPakTajweedApi.idgamWithOutGunnahColor = Color.parseColor(idgamWithOutGunnahColor)
                 this@IndoPakTajweedApi.wazeebGunnahColor = Color.parseColor(wazeebGunnahColor)
-            }
-
-            with(IndoPakTajweedPattern(value.parserConfig)) {
-                this@IndoPakTajweedApi.patternQalqalah = getQalqalahInMiddlePattern().toRegex()
-                this@IndoPakTajweedApi.patternQalqalahStop = getQalqalahInStopPattern().toRegex()
-                this@IndoPakTajweedApi.patternIqfaa = getIqfaaPattern().toRegex()
-                this@IndoPakTajweedApi.patternIqlab = getIqlabPattern().toRegex()
-                this@IndoPakTajweedApi.patternIdgaanWG = getIdgaamWithGunnahPattern().toRegex()
-                this@IndoPakTajweedApi.patternIdgaanWoG = getIdgaamWithOutGunnahPattern().toRegex()
-                this@IndoPakTajweedApi.patternWazeebGunnah = getWazeebGunnah().toRegex()
             }
 
             field = value

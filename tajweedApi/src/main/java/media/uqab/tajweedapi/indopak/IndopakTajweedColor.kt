@@ -1,16 +1,18 @@
-package media.uqab.tajweedapi.common
+package media.uqab.tajweedapi.indopak
 
-data class TajweedColor(
+import media.uqab.tajweedapi.TajweedColor
+
+data class IndopakTajweedColor(
     val qalqalahColor: String,
     val iqfaaColor: String,
     val iqlabColor: String,
     val idgamWithGunnahColor: String,
     val idgamWithOutGunnahColor: String,
     val wazeebGunnahColor: String,
-)
+): TajweedColor
 
-val DefaultColor: TajweedColor
-    get() = TajweedColor(
+val DefaultIndopakColor: IndopakTajweedColor
+    get() = IndopakTajweedColor(
         qalqalahColor = "#00aa00",
         iqfaaColor = "#FF0000",
         iqlabColor = "#0000FF",

@@ -1,10 +1,8 @@
 package media.uqab.tajweedapi
 
-import media.uqab.tajweedapi.common.TajweedColor
-
 /**
  * Platform independent painter interface
- *
+ * to apply color on text.
  */
 interface TajweedPainter {
     /**
